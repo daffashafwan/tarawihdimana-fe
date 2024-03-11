@@ -235,10 +235,9 @@
 
                     // Customize waypoint marker appearance here
                     return L.marker(waypoint.latLng, {
-                        draggable: true,
+                        draggable: false,
                         icon: L.divIcon({
                             className: 'waypoint-icon',
-                            html: '<span>' + number + '</span>',
                             iconSize: [24, 24],
                             iconAnchor: [12, 24],
                             popupAnchor: [0, -24],
