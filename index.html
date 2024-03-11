@@ -142,7 +142,8 @@
                                     </div>
                                     <div class="row mb-5">
                                         <div class="distance-buttons">
-                                            <span id="near" class="distance-text active fw-bold fs-5">Dekat (Hingga 1KM)</span>
+                                            <span id="near" class="distance-text active fw-bold fs-5">Dekat (Hingga
+                                                1KM)</span>
                                             <span id="mid" class="distance-text fw-bold fs-5">Sedang (Hingga 5KM)</span>
                                             <span id="far" class="distance-text fw-bold fs-5">Jauh (Hingga 10KM)</span>
                                         </div>
@@ -260,8 +261,9 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" id="jarak"></li>
                                     <li class="list-group-item" id="waktu"></li>
-                                    <li class="list-group-item"><a class="text-black" href="https://www.google.com/maps/dir/${latitude},${longitude}/${data.position.lat},${data.position.lng}/@${latitude},${longitude},16z/data=!4m6!4m5!1m1!4e1!1m1!4e1!3e2?entry=ttu"
-                                        target="_blank">Buka di Google Maps</a></li>
+                                    <li class="list-group-item">
+                                        <button class="btn btn-custom-1 btn-lg shadow" onclick="openGoogleMaps(${latitude}, ${longitude}, ${data.position.lat}, ${data.position.lng})">Buka di Google Maps</button>
+                                        </li>
                                 </ul>
                             </div>
                         `;
@@ -347,6 +349,13 @@
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
         }
+    }
+
+    function openGoogleMaps(latitude, longitude, destinationLat, destinationLng) {
+
+        var url = `https://www.google.com/maps/dir/${latitude},${longitude}/${destinationLat},${destinationLng}/@${latitude},${longitude},16z/data=!4m6!4m5!1m1!4e1!1m1!4e1!3e2?entry=ttu`;
+
+        window.open(url, '_blank');
     }
 </script>
 
