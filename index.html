@@ -223,7 +223,30 @@
                     L.latLng(resp.position.lat, resp.position.lng)
                 ],
                 draggableWaypoints: false,
-                addWaypoints: false
+                addWaypoints: false,
+                createMarker: function (i, waypoint, number) {
+                    // Define default color
+                    let markerColor = 'blue';
+
+                    // Change color for the ending waypoint
+                    if (i === 1) {
+                        markerColor = 'red';
+                    }
+
+                    // Customize waypoint marker appearance here
+                    return L.marker(waypoint.latLng, {
+                        draggable: true,
+                        icon: L.divIcon({
+                            className: 'waypoint-icon',
+                            html: '<span>' + number + '</span>',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 24],
+                            popupAnchor: [0, -24],
+                            // Set the background color of the waypoint marker
+                            backgroundColor: markerColor
+                        })
+                    });
+                }
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
