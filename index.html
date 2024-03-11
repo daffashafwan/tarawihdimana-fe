@@ -192,9 +192,9 @@
                     success: function (data) {
                         // Handle the response data here
                         console.log(data);
-                        $('#result').empty();
                         setTimeout(() => {
                             $('#overlay').hide();
+                            $('#result').empty();
                             // Display single card
                             var resultsContainer = document.getElementById("result");
                             var card = document.createElement("div");
