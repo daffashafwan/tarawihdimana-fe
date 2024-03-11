@@ -207,7 +207,6 @@
             $(this).removeClass("muted").addClass("active");
 
             var clickedTextValue = $(this).text();
-            console.log(clickedTextValue)
             distanceReq = 1000;
             if (clickedTextValue.includes("Sedang")) {
                 distanceReq = 5000;
@@ -219,7 +218,6 @@
     });
 
     function cariMasjidAcak() {
-        console.log(distanceReq)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var latitude = position.coords.latitude;
@@ -234,7 +232,6 @@
                     return;
                 }
 
-                console.log(latitude, longitude)
                 $.ajax({
                     url: "https://dffshfwn.online/tarawihdimana/random-nearest-mosque",
                     type: 'POST',
@@ -250,7 +247,6 @@
                         $('#overlay').show();
                     },
                     success: function (data) {
-                        console.log(data);
                         setTimeout(() => {
                             $('#overlay').hide();
                             $('#result').empty();
@@ -268,10 +264,12 @@
                                 </ul>
                             </div>
                         `;
+                            $('#result').hide();
                             resultsContainer.appendChild(card);
                             var mapContainer = document.getElementById("map");
                             mapContainer.style.height = "35vh";
                             initMap(latitude, longitude, data)
+                            $('#result').show();
                         }, 200);
                     },
                     error: function (error) {
