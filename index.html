@@ -287,8 +287,8 @@
                 var minutes = Math.floor(durationInSeconds / 60);
                 var seconds = Math.round(durationInSeconds % 60);
 
-                $("#jarak").text = distance + " meter";
-                $("#waktu").text = minutes + " menit " + seconds + " detik";
+                $("#jarak").text(distance + " meter");
+                $("#waktu").text(minutes + " menit " + seconds + " detik");
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
