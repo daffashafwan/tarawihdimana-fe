@@ -27,14 +27,36 @@
         }
 
         .title-custom {
-            font-family: 'Helvetica', sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+            white-space: normal;
+        }
+
+        .text-custom {
+            font-family: 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+            white-space: normal;
+        }
+
+        body {
+            background-color: #F0EDEE;
+        }
+
+        .container-main {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
         }
     </style>
 </head>
 
 <body class="text-center">
 
-    <section class="vh-100" style="background-color: #F0EDEE;">
+    <section class="container-main">
         <nav class="navbar navbar-custom navbar-expand-lg navbar-light shadow">
             <div class="container">
                 <a class="navbar-brand text-white" href="#">tarawihdimana</a>
@@ -46,19 +68,31 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="https://github.com/daffashafwan/tarawihdimana-fe" target="_blank">repo</a>
+                            <a class="nav-link text-white" href="https://github.com/daffashafwan/tarawihdimana-fe"
+                                target="_blank">repo</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="container py-5">
-            <div class="row d-flex justify-content-center align-items-center">
+            <div class="row">
                 <div class="col-12">
                     <div class="row">
-                        <h1 class="title-custom">Tarawih dimana hari ini ?</h1>
+                        <div class="col-md-12 py-5">
+                            <div class="card p-1 mb-5 border-0"
+                                style="border-radius: 2rem;background-color: transparent;color: #2C666E;">
+                                <div class="row" style="min-height: 10vh;">
+                                    <h1 class="title-custom fs-1 fw-bolder" id="dynamicText"></h1>
+                                </div>
+                                <div class="row">
+                                    <p class="text-custom fw-bold fs-5">Explore mall untuk bukber ❌, Explore masjid
+                                        untuk solat tarawih ✅</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
+                    <div class="row result-section">
                         <div class="col-md-12">
                             <div class="card shadow p-3 mb-5 bg-body border-0" style="border-radius: 2rem;">
                                 <div class="card-body p-5 text-center">
@@ -78,6 +112,10 @@
                 </div>
             </div>
         </div>
+
+        <footer class="text-white text-center py-3" style="background-color: #2C666E;">
+            <p>&copy; 2024 tarawihdimana. All rights reserved. Made with 📿, 🕌, 💻 and ☕ by <a href="https://daffashafwan.github.io" target="_blank" class="text-white">daffashafwan</a></p>
+        </footer>
     </section>
 </body>
 
@@ -87,8 +125,26 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
     var map;
+    document.addEventListener('DOMContentLoaded', function () {
+        const textArray = ["Tarawih dimana hari ini ?", "Mau explore masjid mana lagi ya ?", "Masjid dekat sini dimana ya ?"];
+        let textIndex = 0;
+
+        const options = {
+            strings: textArray,
+            typeSpeed: 50, // typing speed in milliseconds
+            backSpeed: 25, // backspacing speed in milliseconds
+            backDelay: 1000, // delay before starting to backspace
+            startDelay: 1000, // delay before starting to type
+            loop: true, // loop the animation
+            showCursor: false
+        };
+
+        const typed = new Typed('#dynamicText', options);
+    });
+
     function getDeviceLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -153,7 +209,7 @@
                 // If the map exists, remove it
                 map.remove();
             }
-            
+
             map = L.map('map').setView([lat, lng], 15);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
