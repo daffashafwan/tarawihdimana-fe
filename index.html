@@ -214,14 +214,14 @@
                             var mapContainer = document.getElementById("map");
                             mapContainer.style.height = "35vh";
                             initMap(latitude, longitude, data)
-                        }, 1000);
+                        }, 200);
                     },
                     error: function (error) {
                         // Handle the error here
                         setTimeout(() => {
                             $('#overlay').hide();
                             console.error("Error:", error);
-                        }, 500);
+                        }, 200);
                     }
                 });
             }, function (error) {
