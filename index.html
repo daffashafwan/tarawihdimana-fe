@@ -115,7 +115,7 @@
                                     <div class="row">
                                         <button onclick="getDeviceLocation()" class="btn btn-custom-1 btn-lg shadow"
                                             type="submit">Cari
-                                            Masjid</button>
+                                            Masjid Acak</button>
                                     </div>
                                 </div>
                                 <div id="result">
@@ -144,6 +144,7 @@
 <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script src="https://kit.fontawesome.com/ac704151b3.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     var map;
     document.addEventListener('DOMContentLoaded', function () {
@@ -183,8 +184,8 @@
                     data: JSON.stringify({
                         latitude: latitude,
                         longitude: longitude,
-                        radius: 1000,
-                        limit: 20
+                        radius: 5000,
+                        limit: 100
                     }),
                     beforeSend: function () {
                         $('#overlay').show();
@@ -221,6 +222,11 @@
                         setTimeout(() => {
                             $('#overlay').hide();
                             console.error("Error:", error);
+                            Swal.fire({
+                                title: 'Gagal mendapatkan data',
+                                text: 'Sepertinya terjadi error, silahkan coba lagi',
+                                icon: 'error'
+                            });
                         }, 200);
                     }
                 });
