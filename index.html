@@ -114,7 +114,8 @@
         </div>
 
         <footer class="text-white text-center py-3" style="background-color: #2C666E;">
-            <p>&copy; 2024 tarawihdimana. All rights reserved. Made with 📿, 🕌, 💻 and ☕ by <a href="https://daffashafwan.github.io" target="_blank" class="text-white">daffashafwan</a></p>
+            <p>&copy; 2024 tarawihdimana. All rights reserved. Made with 📿, 🕌, 💻 and ☕ by <a
+                    href="https://daffashafwan.github.io" target="_blank" class="text-white">daffashafwan</a></p>
         </footer>
     </section>
 </body>
@@ -217,11 +218,12 @@
             }).addTo(map);
 
             L.Routing.control({
+                plan: plan,
                 waypoints: [
                     L.latLng(lat, lng),
                     L.latLng(resp.position.lat, resp.position.lng)
                 ],
-                addWaypoints: false
+                draggableWaypoints: false
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
