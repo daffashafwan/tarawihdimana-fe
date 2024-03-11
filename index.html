@@ -283,10 +283,12 @@
             }).on('routesfound', function (e) {
                 var route = e.routes[0];
                 var distance = route.summary.totalDistance;
-                var duration = route.summary.totalTime;
+                var durationInSeconds = route.summary.totalTime;
+                var minutes = Math.floor(durationInSeconds / 60);
+                var seconds = durationInSeconds % 60;
 
                 console.log('Total Distance: ' + distance + ' meters');
-                console.log('Total Duration: ' + duration + ' seconds');
+                console.log('Total Duration: ' + minutes + ' minutes ' + seconds + ' seconds');
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
