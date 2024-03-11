@@ -222,7 +222,8 @@
                     L.latLng(lat, lng),
                     L.latLng(resp.position.lat, resp.position.lng)
                 ],
-                draggableWaypoints: false
+                draggableWaypoints: false,
+                addWaypoints: false
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
