@@ -192,16 +192,14 @@
                     success: function (data) {
                         // Handle the response data here
                         console.log(data);
-
+                        $('#result').empty();
                         setTimeout(() => {
                             $('#overlay').hide();
-                        }, 1000);
-                        // Display single card
-                        $('#result').empty();
-                        var resultsContainer = document.getElementById("result");
-                        var card = document.createElement("div");
-                        card.className = "card shadow p-3 mb-5 border-0 rounded-3";
-                        card.innerHTML = `
+                            // Display single card
+                            var resultsContainer = document.getElementById("result");
+                            var card = document.createElement("div");
+                            card.className = "card shadow p-3 mb-5 border-0 rounded-3";
+                            card.innerHTML = `
                             <div class="card-body ">
                                 <h5 class="card-title">${data.title}</h5>
                                 <p class="card-text">${data.address.label}</p>
@@ -212,17 +210,18 @@
                                 </ul>
                             </div>
                         `;
-                        resultsContainer.appendChild(card);
-                        var mapContainer = document.getElementById("map");
-                        mapContainer.style.height = "35vh";
-                        initMap(latitude, longitude, data)
+                            resultsContainer.appendChild(card);
+                            var mapContainer = document.getElementById("map");
+                            mapContainer.style.height = "35vh";
+                            initMap(latitude, longitude, data)
+                        }, 1000);
                     },
                     error: function (error) {
                         // Handle the error here
                         setTimeout(() => {
                             $('#overlay').hide();
-                        }, 1000);
-                        console.error("Error:", error);
+                            console.error("Error:", error);
+                        }, 500);
                     }
                 });
             }, function (error) {
