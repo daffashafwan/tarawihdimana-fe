@@ -113,7 +113,7 @@
                             <div class="card shadow p-3 mb-5 bg-body border-0" style="border-radius: 2rem;">
                                 <div class="card-body p-5 text-center">
                                     <div class="row">
-                                        <button onclick="getDeviceLocation()" class="btn btn-custom-1 btn-lg shadow"
+                                        <button onclick="cariMasjidAcak()" class="btn btn-custom-1 btn-lg shadow"
                                             type="submit">Cari
                                             Masjid Acak</button>
                                     </div>
@@ -153,25 +153,29 @@
 
         const options = {
             strings: textArray,
-            typeSpeed: 50, // typing speed in milliseconds
-            backSpeed: 25, // backspacing speed in milliseconds
-            backDelay: 1000, // delay before starting to backspace
-            startDelay: 1000, // delay before starting to type
-            loop: true, // loop the animation
+            typeSpeed: 50,
+            backSpeed: 25,
+            backDelay: 1000,
+            startDelay: 1000,
+            loop: true,
             showCursor: false
         };
 
         const typed = new Typed('#dynamicText', options);
     });
 
-    function getDeviceLocation() {
+    function cariMasjidAcak() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var latitude = position.coords.latitude;
                 var longitude = position.coords.longitude;
 
                 if (isNaN(latitude) || isNaN(longitude)) {
-                    alert("Please enter valid latitude and longitude values.");
+                    Swal.fire({
+                        title: 'Gagal mendapatkan lokasimu',
+                        text: "titik lintang dan bujur tidak tepat",
+                        icon: 'error'
+                    });
                     return;
                 }
 
@@ -179,7 +183,7 @@
                 $.ajax({
                     url: "https://dffshfwn.online/tarawihdimana/random-nearest-mosque",
                     type: 'POST',
-                    contentType: 'application/json', // Set content type to JSON
+                    contentType: 'application/json',
                     dataType: 'json',
                     data: JSON.stringify({
                         latitude: latitude,
@@ -191,12 +195,10 @@
                         $('#overlay').show();
                     },
                     success: function (data) {
-                        // Handle the response data here
                         console.log(data);
                         setTimeout(() => {
                             $('#overlay').hide();
                             $('#result').empty();
-                            // Display single card
                             var resultsContainer = document.getElementById("result");
                             var card = document.createElement("div");
                             card.className = "card shadow p-3 mb-5 border-0 rounded-3";
@@ -218,7 +220,6 @@
                         }, 200);
                     },
                     error: function (error) {
-                        // Handle the error here
                         setTimeout(() => {
                             $('#overlay').hide();
                             console.error("Error:", error);
@@ -231,15 +232,22 @@
                     }
                 });
             }, function (error) {
-                alert("Error getting device location: " + error.message);
+                Swal.fire({
+                    title: 'Gagal mendapatkan lokasimu',
+                    text: error.message,
+                    icon: 'error'
+                });
             });
         } else {
-            alert("Geolocation is not supported by this browser.");
+            Swal.fire({
+                title: 'Gagal mendapatkan lokasimu',
+                text: "Peramban ini tidak mendukung fitur geolokasi",
+                icon: 'error'
+            });
         }
 
         function initMap(lat, lng, resp) {
             if (typeof map !== 'undefined') {
-                // If the map exists, remove it
                 map.remove();
             }
 
@@ -257,16 +265,13 @@
                 draggableWaypoints: false,
                 addWaypoints: false,
                 createMarker: function (i, waypoint, number) {
-                    // Define default icon class and color
-                    let iconClass = 'fas fa-map-marker-alt';  // Font Awesome marker icon class
-                    let iconColor = 'blue';  // Default color
+                    let iconClass = 'fas fa-map-marker-alt';
+                    let iconColor = 'blue';
 
-                    // Change icon class and color for the ending waypoint
                     if (i === 1) {
-                        iconColor = 'red';  // Red color for the ending waypoint
+                        iconColor = 'red';
                     }
 
-                    // Customize waypoint marker appearance here
                     return L.marker(waypoint.latLng, {
                         draggable: false,
                         icon: L.divIcon({
@@ -275,6 +280,13 @@
                         })
                     });
                 }
+            }).on('routesfound', function (e) {
+                var route = e.routes[0];
+                var distance = route.summary.totalDistance;
+                var duration = route.summary.totalTime;
+
+                console.log('Total Distance: ' + distance + ' meters');
+                console.log('Total Duration: ' + duration + ' seconds');
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
