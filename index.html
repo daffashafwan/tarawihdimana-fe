@@ -207,9 +207,9 @@
                                 <h5 class="card-title">${data.title}</h5>
                                 <p class="card-text">${data.address.label}</p>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">${data.address.subdistrict}</li>
-                                    <li class="list-group-item">${data.address.district}</li>
-                                    <li class="list-group-item">${data.address.city}</li>
+                                    <li class="list-group-item" id="jarak"></li>
+                                    <li class="list-group-item" id="waktu"></li>
+                                    <li class="list-group-item">${data.address.subdistrict}, ${data.address.district} ${data.address.city}</li>
                                 </ul>
                             </div>
                         `;
@@ -287,8 +287,8 @@
                 var minutes = Math.floor(durationInSeconds / 60);
                 var seconds = Math.round(durationInSeconds % 60);
 
-                console.log('Total Distance: ' + distance + ' meters');
-                console.log('Total Duration: ' + minutes + ' minutes ' + seconds + ' seconds');
+                $("#jarak").text = distance + " meter";
+                $("#waktu").text = minutes + " menit " + seconds + " detik";
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
