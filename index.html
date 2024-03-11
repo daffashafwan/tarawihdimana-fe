@@ -227,12 +227,11 @@
                 addWaypoints: false,
                 createMarker: function (i, waypoint, number) {
                     // Define default icon class and color
-                    let iconClass = 'fas fa-map-marker-alt';  // Font Awesome marker icon class
+                    let iconClass = 'fas fa-flag';  // Font Awesome marker icon class
                     let iconColor = 'blue';  // Default color
 
                     // Change icon class and color for the ending waypoint
                     if (i === 1) {
-                        iconClass = 'fas fa-flag';  // Font Awesome flag icon class
                         iconColor = 'red';  // Red color for the ending waypoint
                     }
 
