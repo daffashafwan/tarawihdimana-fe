@@ -127,6 +127,7 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://kit.fontawesome.com/ac704151b3.js" crossorigin="anonymous"></script>
 <script>
     var map;
     document.addEventListener('DOMContentLoaded', function () {
@@ -223,7 +224,25 @@
                     L.latLng(resp.position.lat, resp.position.lng)
                 ],
                 draggableWaypoints: false,
-                addWaypoints: false
+                addWaypoints: false,
+                createMarker: function (i, waypoint, number) {
+                    // Define default icon class
+                    let iconClass = 'fas fa-map-marker-alt';  // Font Awesome marker icon class
+
+                    // Change icon class for the ending waypoint
+                    if (i === 1) {
+                        iconClass = 'fas fa-flag';  // Font Awesome flag icon class
+                    }
+
+                    // Customize waypoint marker appearance here
+                    return L.marker(waypoint.latLng, {
+                        draggable: true,
+                        icon: L.divIcon({
+                            className: 'waypoint-icon',
+                            html: '<i class="' + iconClass + ' waypoint-icon-color"></i>'
+                        })
+                    });
+                }
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
