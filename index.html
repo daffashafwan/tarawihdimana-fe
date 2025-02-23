@@ -223,6 +223,31 @@
         });
     });
 
+    function getPrayerTimes(city) {
+        $.ajax({
+            url: "https://dffshfwn.online/tarawihdimana/prayer-times",
+            type: 'GET',
+            dataType: 'json',
+            data: { city: city },
+            success: function (data) {
+                let now = new Date();
+                let currentHour = now.getHours();
+                let currentMinute = now.getMinutes();
+
+                
+                if (data.data.jadwal.isya) {
+                    $("#adzan").text("Jadwal Tarawih : " + data.data.jadwal.isya);
+                } else {
+                    $("#adzan").text("Jadwal sholat tidak tersedia");
+                }
+            },
+            error: function (error) {
+                console.error("Error fetching prayer times:", error);
+                $("#adzan").text("Gagal mengambil jadwal sholat.");
+            }
+        });
+    }
+
     function cariMasjidAcak() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -266,6 +291,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" id="jarak"></li>
                                     <li class="list-group-item" id="waktu"></li>
+                                    <li class="list-group-item" id="adzan"></li>
                                     <li class="list-group-item">
                                         <button class="btn btn-custom-2 btn-sm shadow" onclick="openGoogleMaps(${latitude}, ${longitude}, ${data.position.lat}, ${data.position.lng})">Buka di Google Maps</button>
                                         </li>
@@ -276,6 +302,7 @@
                             resultsContainer.appendChild(card);
                             var mapContainer = document.getElementById("map");
                             mapContainer.style.height = "35vh";
+                            getPrayerTimes(data.address.city)
                             initMap(latitude, longitude, data)
                             $('#result').show();
                         }, 200);
@@ -348,8 +375,8 @@
                 var minutes = Math.floor(durationInSeconds / 60);
                 var seconds = Math.round(durationInSeconds % 60);
 
-                $("#jarak").text(distance + " meter");
-                $("#waktu").text(minutes + " menit " + seconds + " detik");
+                $("#jarak").text("Jarak : " + distance + " meter");
+                $("#waktu").text("Waktu Tempuh : "+ minutes + " menit " + seconds + " detik");
             }).addTo(map);
 
             $(".leaflet-routing-container.leaflet-bar.leaflet-routing-collapsible.leaflet-control").addClass("leaflet-routing-container-hide");
